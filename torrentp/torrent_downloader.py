@@ -3,6 +3,17 @@ from .torrent_info import TorrentInfo
 from .downloader import Downloader
 import libtorrent as lt
 
+TORRENT_STATES = {
+    0: "Queued",
+    1: "Checking",
+    2: "Downloading Metadata",
+    3: "Downloading",
+    4: "Finished",
+    5: "Seeding",
+    6: "Allocating",
+    7: "Checking Resume Data"
+}
+
 
 class TorrentDownloader:
     def __init__(self, file_path, save_path, port=6881, stop_after_download=False):
@@ -59,3 +70,15 @@ class TorrentDownloader:
 
     def __call__(self):
         pass
+        
+    def status(self):
+        if self._file:
+            status = self._file.status()
+            return {
+                "progress": round(status.progress * 100, 2),
+                "state": TORRENT_STATES.get(status.state, "Unknown"),
+                "download_speed": round(status.download_rate / 1024*1024, 2),
+                "upload_speed": round(status.upload_rate / 1024*1024, 2),
+                "peers": status.num_peers,
+            }
+        return {"error": "Torrent not started or stopped"}
