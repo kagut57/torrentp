@@ -52,10 +52,10 @@ class TorrentDownloader:
             self._downloader.stop()
 
     def __str__(self):
-        return f"<TorrentDownloader: save_path='{self._save_path}'>"
+        return f"<TorrentDownloader: save_path='{self._save_path}', status='{self._file.status()}'>"
 
     def __repr__(self):
-        return f"TorrentDownloader: save_path='{self._save_path}')"
+        return f"<TorrentDownloader: save_path='{self._save_path}', status='{self._file.status()}'>"
 
     def __call__(self):
         pass
