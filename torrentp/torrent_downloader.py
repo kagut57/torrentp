@@ -77,8 +77,8 @@ class TorrentDownloader:
             return {
                 "progress": round(status.progress * 100, 2),
                 "state": TORRENT_STATES.get(status.state, "Unknown"),
-                "download_speed": round(status.download_rate / 1024*1024, 2),
-                "upload_speed": round(status.upload_rate / 1024*1024, 2),
+                "download_speed": round(status.download_rate / (1024 * 1024), 2),
+                "upload_speed": round(status.upload_rate / (1024 * 1024), 2),
                 "peers": status.num_peers,
             }
         return {"error": "Torrent not started or stopped"}
